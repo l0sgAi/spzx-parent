@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--保证映射文件的命名空间和mapper接口的全类名保持一致-->
+<mapper namespace="com.losgai.spzx.manager.mapper.SysUserMapper">
+
+    <sql id="allUserColumns">
+        id,username,password,name,phone,avatar,description,status,create_time,update_time,is_deleted
+    </sql>
+
+    <!--用户添加-->
+    <insert id="saveSysUser">
+        insert into sys_user
+        (id,
+         username,
+         password,
+         name,
+         phone,
+         avatar,
+         description,
+         status)
+        values (#{id},
+                #{userName},
+                #{password},
+                #{name},
+                #{phone},
+                #{avatar},
+                #{description},
+                #{status})
+    </insert>
+
+    <!--用户修改-->
+    <update id="updateSysUser">
+        update sys_user set
+        <if test="userName != null and userName != ''">
+            username =
+            #{userName},
+        </if>
+        <if test="password != null and password != ''">
+            password =
+            #{password},
+        </if>
+        <if test="name != null and name != ''">
+            name =
+            #{name},
+        </if>
+        <if test="phone != null and phone != ''">
+            phone =
+            #{phone},
+        </if>
+        <if test="avatar != null and avatar != ''">
+            avatar =
+            #{avatar},
+        </if>
+        <if test="description != null and description != ''">
+            description =
+            #{description},
+        </if>
+        <if test="status != null and status != ''">
+            status =
+            #{status},
+        </if>
+        update_time = now()
+        where id = #{id}
+    </update>
+
+    <!--用户软删除-->
+    <update id="deleteSysUserById">
+        update sys_user set is_deleted = 1, update_time = now() where id = #{userId}
+    </update>
+
+    <select id="selectUserInfoByUserName" resultType="com.losgai.spzx.model.entity.system.SysUser">
+        select
+        <include refid="allUserColumns"/>
+        from sys_user where username = #{userName}
+        and is_deleted = 0
+    </select>
+
+    <!--用户分页查询-->
+    <select id="findByPage" resultType="com.losgai.spzx.model.entity.system.SysUser">
+        select
+        <include refid="allUserColumns"/>
+        from sys_user
+        <where>
+            <if test="keyword != null and keyword != ''">
+                and username like concat('%',#{keyword},'%')
+            </if>
+            <if test="createTimeBegin != null and createTimeBegin != ''">
+                and create_time &gt;=
+                #{createTimeBegin}
+            </if>
+            <if test="createTimeEnd != null and createTimeEnd != ''">
+                and create_time &lt;=
+                #{createTimeEnd}
+            </if>
+            and is_deleted = 0
+        </where>
+        order by id desc
+    </select>
+
+    <!--用户同名计数查询-->
+    <select id="selectCountByUserName" resultType="java.lang.Integer">
+        select count(1) from sys_user where
+        username = #{userName}
+        and is_deleted=0
+    </select>
+</mapper>

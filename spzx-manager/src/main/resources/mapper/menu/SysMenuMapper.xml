@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--保证映射文件的命名空间和mapper接口的全类名保持一致-->
+<mapper namespace="com.losgai.spzx.manager.mapper.SysMenuMapper">
+    <resultMap id="sysMenuMap" type="com.losgai.spzx.model.entity.system.SysMenu" autoMapping="true"/>
+
+    <sql id="columns">
+        id,parent_id,title,component,sort_value,status,create_time,update_time,is_deleted
+    </sql>
+    <!--插入菜单-->
+    <insert id="addMenu">
+        insert into sys_menu
+        (id,
+         parent_id,
+         title,
+         component,
+         sort_value,
+         status)
+        values (#{id},
+                #{parentId},
+                #{title},
+                #{component},
+                #{sortValue},
+                #{status})
+    </insert>
+    <update id="updateMenuById">
+        update sys_menu set
+        <if test="parent_id != null and parent_id != ''">
+            parent_id = #{parentId},
+        </if>
+        <if test="title != null and title != ''">
+            title = #{title},
+        </if>
+        <if test="component != null and component != ''">
+            component = #{component},
+        </if>
+        <if test="sortValue != null and sortValue != ''">
+            sort_value = #{sortValue},
+        </if>
+        <if test="status != null and status != ''">
+            status = #{status},
+        </if>
+        update_time = now()
+        where id = #{id}
+        and is_deleted = 0
+    </update>
+    <!--列表删除-->
+    <update id="removeMenuById">
+        update sys_menu set is_deleted = 1,update_time = now()
+        where id = #{id}
+        and is_deleted = 0
+    </update>
+    <!--判断某个菜单下是否有子菜单-->
+    <select id="selectCountByParentId" resultType="java.lang.Integer">
+        select count(1)
+        from sys_menu
+        where parent_id = #{id}
+          and is_deleted = 0
+    </select>
+
+    <!--查询所有菜单，返回List集合-->
+    <select id="findAllMenus" resultMap="sysMenuMap">
+        select
+        <include refid="columns"/>
+        from sys_menu
+        where is_deleted = 0
+        order by sort_value
+    </select>
+    <select id="findMenusByUserId" resultType="com.losgai.spzx.model.entity.system.SysMenu">
+        SELECT sm.*
+        FROM sys_menu sm
+                 INNER JOIN sys_role_menu srm
+                            ON sm.id = srm.menu_id
+                 INNER JOIN sys_user_role sur on sur.role_id = srm.role_id
+        WHERE sur.user_id = #{userId}
+          AND sm.is_deleted = 0
+        GROUP BY sm.id
+    </select>
+
+    <!--根据id查找父菜单-->
+    <select id="selectParentMenu" resultMap="sysMenuMap">
+        select
+        <include refid="columns"/>
+        from sys_menu
+        where id = #{parentId}
+        and is_deleted = 0
+    </select>
+
+</mapper>

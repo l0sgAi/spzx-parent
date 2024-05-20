@@ -1,0 +1,33 @@
+server:
+  port: 5555
+
+spring:
+  #数据库配置
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #TODO 将192.168.200.131修改成自己的ip
+    url: jdbc:mysql://192.168.200.131:3306/spzx_db?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+  #Redis配置
+  data:
+    redis:
+      host: 192.168.200.131
+      port: 6379
+
+# mybatis的配置
+mybatis:
+  config-location: classpath:/mybatis-config.xml
+  mapper-locations: classpath:/mapper/*/*.xml
+
+spzx:
+  auth:
+    noAuthUrls:
+      - /admin/system/index/login
+      - /admin/system/index/generateValidateCode
+  minio:
+    endpointUrl: http://192.168.200.131:9001
+    accessKey: admin
+    secretKey: admin123456
+    bucketName: spzx-bucket

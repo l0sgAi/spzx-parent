@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--保证映射文件的命名空间和mapper接口的全类名保持一致-->
+<mapper namespace="com.losgai.spzx.manager.mapper.SysRoleMapper">
+    <!--映射查询到的字段-->
+    <resultMap type="com.losgai.spzx.model.entity.system.SysRole" id="sysRoleMap" autoMapping="true"/>
+
+    <sql id="columns">
+        id,role_name,role_code,description,create_time,update_time,is_deleted
+    </sql>
+
+    <!-- 用户添加   -->
+    <insert id="saveSysRole">
+        insert into sys_role(id,
+                             role_name,
+                             role_code,
+                             description)
+        values (#{id},
+                #{roleName},
+                #{roleCode},
+                #{description})
+    </insert>
+
+    <!--用户信息显示-->
+    <select id="findByPage" resultMap="sysRoleMap">
+        select
+        <include refid="columns"/>
+        from sys_role
+        <where>
+            is_deleted = 0
+            <if test="roleName != null and roleName != ''">
+                and role_name like concat('%',
+                #{roleName},
+                '%'
+                )
+                /*注意roleName不要用引号包裹了，否则会报错*/
+            </if>
+        </where>
+        order by id desc
+    </select>
+    <!--查询所有角色信息-->
+    <select id="findAllRoles" resultType="com.losgai.spzx.model.entity.system.SysRole">
+        select
+        <include refid="columns"/>
+        from sys_role
+        where is_deleted = 0
+    </select>
+    <!-- 用户修改   -->
+    <update id="updateSysRole">
+        update sys_role set
+        <if test="roleName != null and roleName != ''">
+            role_name = #{roleName},
+        </if>
+        <if test="roleCode != null and roleCode != ''">
+            role_code = #{roleCode},
+        </if>
+        <if test="description != null and description != ''">
+            description = #{description},
+        </if>
+        update_time = now()
+        where id = #{id}
+    </update>
+    <!--用户删除-->
+    <update id="deleteSysRoleById">
+        update sys_role set is_deleted = 1,update_time = now()
+        where id = #{roleId} and is_deleted = 0
+    </update>
+
+</mapper>
