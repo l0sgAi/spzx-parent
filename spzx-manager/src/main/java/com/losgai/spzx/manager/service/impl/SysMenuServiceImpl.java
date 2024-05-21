@@ -83,7 +83,6 @@ public class SysMenuServiceImpl implements SysMenuService {
         //操作菜单封装成前端路由形式返回
         List<SysMenu> buildedList = MenuHelper.buildTree(sysMenuList);
 
-
         return this.buildMenus(buildedList);
     }
 
