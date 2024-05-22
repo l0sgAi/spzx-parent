@@ -55,7 +55,6 @@ public class SysRoleServiceImpl implements SysRoleService {
         //2.分配过的角色列表
         Map<String,Object> sysRoleMap=new HashMap<>();
         sysRoleMap.put("allRolesList",sysRoleList);
-
         return sysRoleMap;
     }
 }

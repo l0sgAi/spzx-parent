@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--保证映射文件的命名空间和mapper接口的全类名保持一致-->
+<mapper namespace="com.losgai.spzx.manager.mapper.CategoryBrandMapper">
+
+    <resultMap id="categoryBrandMap" type="com.losgai.spzx.model.entity.product.CategoryBrand" autoMapping="true"/>
+
+    <sql id="columns">
+        id,brand_id,category_id,create_time,update_time,is_deleted
+    </sql>
+
+    <!--添加分类品牌-->
+    <insert id="save">
+        insert into category_brand
+        (id,
+         brand_id,
+         category_id,
+         create_time,
+         update_time,
+         is_deleted)
+        values (#{id},
+                #{brandId},
+                #{categoryId},
+                now(),
+                now(),
+                0)
+    </insert>
+
+    <!--更新分类品牌-->
+    <update id="updateCategoryBrand">
+        update category_brand set
+        <if test="brandId != null and brandId != ''">
+            brand_id = #{brandId},
+        </if>
+        <if test="categoryId != null and categoryId != ''">
+            category_id = #{categoryId},
+        </if>
+        update_time = now()
+        where id = #{id}
+    </update>
+
+    <!--软删除分类品牌-->
+    <update id="deleteCategoryBrand">
+        update category_brand
+        set is_deleted  = 1,
+            update_time = now()
+        where id = #{id}
+          and is_deleted = 0
+    </update>
+
+    <!--分类品牌条件查询-->
+    <!--brandId不为空查询brandId，categoryId不为空查询categoryId-->
+    <select id="findByPage" resultType="com.losgai.spzx.model.entity.product.CategoryBrand">
+        SELECT cb.*,
+        c.name AS categoryName,
+        b.name AS brandName,
+        b.logo
+        FROM category_brand cb
+        INNER JOIN category c ON
+        c.id = cb.category_id
+        INNER JOIN brand b ON
+        b.id = cb.brand_id
+        <where>
+            <if test="categoryId != null and categoryId != ''">
+                and cb.category_id =
+                #{categoryId}
+            </if>
+            <if test="brandId != null and brandId != ''">
+                and cb.brand_id =
+                #{brandId}
+            </if>
+        </where>
+        and cb.is_deleted = 0
+        order by cb.id desc
+    </select>
+</mapper>
