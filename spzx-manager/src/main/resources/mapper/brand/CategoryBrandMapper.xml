@@ -75,4 +75,13 @@
         and cb.is_deleted = 0
         order by cb.id desc
     </select>
+
+    <!--通过分类id查询品牌列表-->
+    <select id="findBrandByCategoryId" resultType="com.losgai.spzx.model.entity.product.Brand">
+        SELECT b.*
+        FROM category_brand cb
+                 INNER JOIN brand b ON b.id = cb.brand_id
+        WHERE cb.category_id = #{categoryId} AND cb.is_deleted = 0
+        ORDER BY id DESC
+    </select>
 </mapper>

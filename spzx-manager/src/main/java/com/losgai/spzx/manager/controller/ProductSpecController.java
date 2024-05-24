@@ -8,6 +8,8 @@ import com.losgai.spzx.model.vo.common.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin/product/productSpec")
 public class ProductSpecController {
@@ -40,4 +42,9 @@ public class ProductSpecController {
         return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 
+    @GetMapping("/findAll") //查询所有
+    public Result findAll() {
+        List<ProductSpec> list = productSpecService.findAll();
+        return Result.build(list, ResultCodeEnum.SUCCESS);
+    }
 }

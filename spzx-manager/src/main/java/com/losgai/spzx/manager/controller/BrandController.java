@@ -4,14 +4,12 @@ package com.losgai.spzx.manager.controller;
 import com.github.pagehelper.PageInfo;
 import com.losgai.spzx.manager.service.BrandService;
 import com.losgai.spzx.model.entity.product.Brand;
-import com.losgai.spzx.model.entity.system.SysRole;
 import com.losgai.spzx.model.vo.common.Result;
 import com.losgai.spzx.model.vo.common.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("admin/product/brand")

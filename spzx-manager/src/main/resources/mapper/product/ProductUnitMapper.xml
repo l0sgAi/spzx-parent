@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--保证映射文件的命名空间和mapper接口的全类名保持一致-->
+<mapper namespace="com.losgai.spzx.manager.mapper.ProductUnitMapper">
+
+    <resultMap id="productUnitMap" type="com.losgai.spzx.model.entity.base.ProductUnit" autoMapping="true"/>
+
+    <sql id="columns">
+        id,name,create_time,update_time,is_deleted
+    </sql>
+
+    <!--查询所有产品单位信息-->
+    <select id="findAll" resultMap="productUnitMap">
+        select <include refid="columns"/>
+        from product_unit
+        where is_deleted = 0
+        order by id desc
+    </select>
+
+</mapper>

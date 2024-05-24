@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.losgai.spzx.manager.mapper.CategoryBrandMapper;
 import com.losgai.spzx.manager.service.CategoryBrandService;
 import com.losgai.spzx.model.dto.product.CategoryBrandDto;
+import com.losgai.spzx.model.entity.product.Brand;
 import com.losgai.spzx.model.entity.product.CategoryBrand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,10 @@ public class CategoryBrandServiceImpl implements CategoryBrandService {
     @Override
     public void deleteCategoryBrand(Long id) {
         categoryBrandMapper.deleteCategoryBrand(id);
+    }
+
+    @Override
+    public List<Brand> findBrandByCategoryId(Long categoryId) {
+        return categoryBrandMapper.findBrandByCategoryId(categoryId);
     }
 }

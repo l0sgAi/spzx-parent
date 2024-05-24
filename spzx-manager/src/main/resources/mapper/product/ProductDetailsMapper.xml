@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--保证映射文件的命名空间和mapper接口的全类名保持一致-->
+<mapper namespace="com.losgai.spzx.manager.mapper.ProductDetailsMapper">
+
+    <sql id="columns">
+        id,product_id,image_urls,create_time,update_time,is_deleted
+    </sql>
+
+    <!--插入商品详情-->
+    <insert id="save">
+        insert into product_details
+        (id,
+         product_id,
+         image_urls,
+         create_time,
+         update_time,
+         is_deleted)
+            value (
+                   #{id},
+                   #{productId},
+                   #{imageUrls},
+                   now(),
+                   now(),
+                   0
+            )
+    </insert>
+
+    <!--更新商品详情-->
+    <update id="updateById">
+        update product_details set
+        <if test="productId != null and productId != ''">
+            product_id = #{productId},
+        </if>
+        <if test="imageUrls != null and imageUrls != ''">
+            image_urls = #{imageUrls},
+        </if>
+        update_time =  now()
+        where id = #{id}
+        and is_deleted = 0
+    </update>
+
+    <!--逻辑删除商品详情-->
+    <update id="deleteByProductId">
+        update product_details set is_deleted = 1,update_time = now()
+        where product_id = #{id}
+    </update>
+
+    <!--根据商品id查询商品详情-->
+    <select id="findProductDetailsById" resultType="com.losgai.spzx.model.entity.product.ProductDetails">
+        select <include refid="columns"/>
+        from product_details
+        where product_id = #{productId}
+        and is_deleted = 0
+    </select>
+</mapper>

@@ -4,11 +4,14 @@ package com.losgai.spzx.manager.controller;
 import com.github.pagehelper.PageInfo;
 import com.losgai.spzx.manager.service.CategoryBrandService;
 import com.losgai.spzx.model.dto.product.CategoryBrandDto;
+import com.losgai.spzx.model.entity.product.Brand;
 import com.losgai.spzx.model.entity.product.CategoryBrand;
 import com.losgai.spzx.model.vo.common.Result;
 import com.losgai.spzx.model.vo.common.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/product/categoryBrand")
@@ -16,6 +19,13 @@ public class CategoryBrandController {
 
     @Autowired
     private CategoryBrandService categoryBrandService;
+
+    //根据分类id查询品牌数据
+    @GetMapping("/findBrandByCategoryId/{categoryId}")
+    public Result findBrandByCategoryId(@PathVariable("categoryId") Long categoryId) {
+        List<Brand> list = categoryBrandService.findBrandByCategoryId(categoryId);
+        return Result.build(list, ResultCodeEnum.SUCCESS);
+    }
 
     //分类品牌条件查询
     @GetMapping("/{page}/{limit}")
