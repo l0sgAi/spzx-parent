@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--保证映射文件的命名空间和mapper接口的全类名保持一致-->
+<mapper namespace="com.losgai.spzx.manager.mapper.OrderStatisticsMapper">
+
+    <sql id="columns">
+        id,order_date,total_amount,total_num,create_time,update_time,is_deleted
+    </sql>
+
+    <resultMap id="orderStatisticsMap" type="com.losgai.spzx.model.entity.order.OrderStatistics" autoMapping="true"/>
+
+    <!--插入订单信息-->
+    <insert id="insertOrderStatistics" useGeneratedKeys="true" keyProperty="id">
+        insert into order_statistics
+        (id,
+         order_date,
+         total_amount,
+         total_num)
+        values (#{id},
+                #{orderDate},
+                #{totalAmount},
+                #{totalNum})
+    </insert>
+
+    <!--根据dto查询统计结果数据集，返回列表-->
+    <select id="selectList" resultMap="orderStatisticsMap">
+        select
+        <include refid="columns"/>
+        from order_statistics
+        <where>
+            <if test="createTimeBegin != null and createTimeBegin != ''">
+                and order_date &gt;=
+                #{createTimeBegin}
+            </if>
+            <if test="createTimeEnd != null and createTimeEnd != ''">
+                and order_date &lt;=
+                #{createTimeEnd}
+            </if>
+        </where>
+        order by order_date
+    </select>
+</mapper>

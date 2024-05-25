@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--保证映射文件的命名空间和mapper接口的全类名保持一致-->
+<mapper namespace="com.losgai.spzx.manager.mapper.OrderInfoMapper">
+    <select id="selectStatisticsByDate" resultType="com.losgai.spzx.model.entity.order.OrderStatistics">
+        SELECT
+            DATE_FORMAT(create_time,'%Y-%m-%d') AS orderDate,
+            SUM(oi.total_amount) AS totalAmount,
+            COUNT(oi.id) AS totalNum
+        FROM order_info oi
+        WHERE DATE_FORMAT(create_time,'%Y-%m-%d') = #{createDate}
+        GROUP BY DATE_FORMAT(create_time,'%Y-%m-%d')
+    </select>
+</mapper>
