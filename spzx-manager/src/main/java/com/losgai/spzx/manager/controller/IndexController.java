@@ -1,5 +1,7 @@
 package com.losgai.spzx.manager.controller;
 
+import com.losgai.spzx.common.log.annotation.Log;
+import com.losgai.spzx.common.log.enums.OperatorType;
 import com.losgai.spzx.manager.service.SysMenuService;
 import com.losgai.spzx.manager.service.SysUserService;
 import com.losgai.spzx.manager.service.ValidateCodeService;

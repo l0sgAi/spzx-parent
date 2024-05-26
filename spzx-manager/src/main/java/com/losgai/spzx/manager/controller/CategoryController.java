@@ -1,5 +1,7 @@
 package com.losgai.spzx.manager.controller;
 
+import com.losgai.spzx.common.log.annotation.Log;
+import com.losgai.spzx.common.log.enums.OperatorType;
 import com.losgai.spzx.manager.service.CategoryService;
 import com.losgai.spzx.model.entity.product.Category;
 import com.losgai.spzx.model.vo.common.Result;
@@ -27,12 +29,14 @@ public class CategoryController {
     }
 
     //导出Excel数据接口
+    @Log(title = "导入分类Excel", businessType = 0,operatorType = OperatorType.MANAGE)
     @GetMapping("/exportExcel")
     public void exportExcel(HttpServletResponse response) {
         categoryService.exportExcel(response);
     }
 
     //导入Excel文件
+    @Log(title = "导出分类Excel", businessType = 0,operatorType = OperatorType.MANAGE)
     @PostMapping("/importExcel")
     public Result importExcel(MultipartFile file) {
         //获取上传文件

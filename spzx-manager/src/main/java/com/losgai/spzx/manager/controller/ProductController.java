@@ -2,6 +2,8 @@ package com.losgai.spzx.manager.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.losgai.spzx.common.log.annotation.Log;
+import com.losgai.spzx.common.log.enums.OperatorType;
 import com.losgai.spzx.manager.service.ProductService;
 import com.losgai.spzx.model.dto.product.ProductDto;
 import com.losgai.spzx.model.entity.product.Product;
@@ -21,6 +23,7 @@ public class ProductController {
     private ProductService productService;
 
     //商品上下架
+    @Log(title = "商品管理:上下架", businessType = 2,operatorType = OperatorType.MANAGE)
     @GetMapping("/updateStatus/{id}/{status}")
     public Result updateStatus(@PathVariable Long id,@PathVariable Integer status) {
         productService.updateStatus(id, status);
@@ -28,6 +31,7 @@ public class ProductController {
     }
 
     //商品上架审核
+    @Log(title = "商品管理:审核", businessType = 2,operatorType = OperatorType.MANAGE)
     @GetMapping("/updateAuditStatus/{id}/{auditStatus}")
     public Result updateAuditStatus(@PathVariable Long id,@PathVariable Integer auditStatus) {
         productService.updateAuditStatus(id, auditStatus);
@@ -35,6 +39,7 @@ public class ProductController {
     }
 
     //删除
+    @Log(title = "商品管理:删除", businessType = 3,operatorType = OperatorType.MANAGE)
     @DeleteMapping("/deleteById/{id}")
     public Result remove(@Parameter(name = "id", description = "商品id", required = true)
                          @PathVariable Long id) {
@@ -43,6 +48,7 @@ public class ProductController {
     }
 
     //保存修改的数据
+    @Log(title = "商品管理:信息修改", businessType = 2,operatorType = OperatorType.MANAGE)
     @PutMapping("/updateById")
     public Result updateById(@RequestBody Product product) {
         productService.updateById(product);
@@ -50,6 +56,7 @@ public class ProductController {
     }
 
     //根据商品id查询商品信息
+    @Log(title = "商品管理:查询", businessType = 0,operatorType = OperatorType.MANAGE)
     @GetMapping("/getProductById/{productId}")
     public Result getProductById(@PathVariable("productId") Long productId) {
         Product product = productService.getProductById(productId);
@@ -57,6 +64,7 @@ public class ProductController {
     }
 
     //添加商品信息
+    @Log(title = "商品管理:保存", businessType = 1,operatorType = OperatorType.MANAGE)
     @PostMapping("/save")
     public Result save(@RequestBody Product product) {
         productService.save(product);

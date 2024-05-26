@@ -75,6 +75,7 @@ public class SysMenuServiceImpl implements SysMenuService {
     public List<SysMenuVo> findMenuByUserId() {
         //获取当前登录的用户ID
         SysUser sysUser = AuthContextUtil.getUser(); //从线程池中取出登录用户对象
+        System.out.println("=========用户======== \n" + sysUser);
         Long userId = sysUser.getId();
 
 

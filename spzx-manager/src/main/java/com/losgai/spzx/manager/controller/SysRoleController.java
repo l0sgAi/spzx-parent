@@ -1,6 +1,8 @@
 package com.losgai.spzx.manager.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.losgai.spzx.common.log.annotation.Log;
+import com.losgai.spzx.common.log.enums.OperatorType;
 import com.losgai.spzx.manager.service.SysRoleService;
 import com.losgai.spzx.model.dto.system.SysRoleDto;
 import com.losgai.spzx.model.entity.system.SysRole;
@@ -31,6 +33,7 @@ public class SysRoleController {
     }
 
     //2.角色添加的方法
+    @Log(title = "角色管理:添加", businessType = 1,operatorType = OperatorType.MANAGE)
     @PostMapping("/saveSysRole")
     public Result saveSysRole(@RequestBody SysRole sysRole) {
         sysRoleService.saveSysRole(sysRole);
@@ -38,6 +41,7 @@ public class SysRoleController {
     }
 
     //3.角色修改方法
+    @Log(title = "角色管理:修改", businessType = 2,operatorType = OperatorType.MANAGE)
     @PutMapping ("/updateSysRole")
     public Result updateSysRole(@RequestBody SysRole sysRole) {
         sysRoleService.updateSysRole(sysRole);
@@ -45,6 +49,7 @@ public class SysRoleController {
     }
 
     //4.角色删除方法
+    @Log(title = "角色管理:删除", businessType = 3,operatorType = OperatorType.MANAGE)
     @DeleteMapping("/deleteSysRoleById/{roleId}")
     public Result deleteSysRoleById(@PathVariable("roleId") Long roleId) {
         sysRoleService.deleteSysRoleById(roleId);

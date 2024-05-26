@@ -2,6 +2,8 @@ package com.losgai.spzx.manager.controller;
 
 
 import com.github.pagehelper.PageInfo;
+import com.losgai.spzx.common.log.annotation.Log;
+import com.losgai.spzx.common.log.enums.OperatorType;
 import com.losgai.spzx.manager.service.BrandService;
 import com.losgai.spzx.model.entity.product.Brand;
 import com.losgai.spzx.model.vo.common.Result;
@@ -25,6 +27,7 @@ public class BrandController {
         return Result.build(pageInfo, ResultCodeEnum.SUCCESS);
     }
 
+    @Log(title = "品牌管理:新增品牌", businessType = 1,operatorType = OperatorType.MANAGE)
     @PostMapping("/save") //新增品牌
     public Result save(@RequestBody Brand brand) {
         brandService.saveBrand(brand);
@@ -34,6 +37,7 @@ public class BrandController {
     //TODO 修改和删除部分
 
     //品牌修改方法
+    @Log(title = "品牌管理:修改品牌", businessType = 2,operatorType = OperatorType.MANAGE)
     @PutMapping ("/updateBrand")
     public Result updateBrand(@RequestBody Brand brand) {
         brandService.updateBrand(brand);
@@ -41,6 +45,7 @@ public class BrandController {
     }
 
     //品牌删除方法
+    @Log(title = "品牌管理:删除品牌", businessType = 3,operatorType = OperatorType.MANAGE)
     @DeleteMapping("/deleteBrandById/{brandId}")
     public Result deleteBrandById(@PathVariable("brandId") Long brandId) {
         brandService.deleteBrandById(brandId);

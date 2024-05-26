@@ -1,5 +1,7 @@
 package com.losgai.spzx.manager.controller;
 
+import com.losgai.spzx.common.log.annotation.Log;
+import com.losgai.spzx.common.log.enums.OperatorType;
 import com.losgai.spzx.manager.service.SysRoleMenuService;
 import com.losgai.spzx.model.dto.system.AssginMenuDto;
 import com.losgai.spzx.model.vo.common.Result;
@@ -22,6 +24,7 @@ public class SysRoleMenuController {
     }
 
     //2.保存角色分配的菜单数据
+    @Log(title = "角色管理:分配菜单", businessType = 0,operatorType = OperatorType.MANAGE)
     @PostMapping("/doAssign")
     public Result doAssign(@RequestBody AssginMenuDto assginMenuDto) {
         sysRoleMenuService.doAssign(assginMenuDto);

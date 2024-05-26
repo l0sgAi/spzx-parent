@@ -20,4 +20,5 @@ public class AuthContextUtil {
     public static void removeUser() {
         threadLocal.remove();
     }
+
 }
