@@ -56,7 +56,7 @@ public class ProductController {
     }
 
     //根据商品id查询商品信息
-    @Log(title = "商品管理:查询", businessType = 0,operatorType = OperatorType.MANAGE)
+//    @Log(title = "商品管理:查询", businessType = 0,operatorType = OperatorType.MANAGE)
     @GetMapping("/getProductById/{productId}")
     public Result getProductById(@PathVariable("productId") Long productId) {
         Product product = productService.getProductById(productId);
@@ -64,7 +64,7 @@ public class ProductController {
     }
 
     //添加商品信息
-    @Log(title = "商品管理:保存", businessType = 1,operatorType = OperatorType.MANAGE)
+    @Log(title = "商品管理:新增", businessType = 1,operatorType = OperatorType.MANAGE)
     @PostMapping("/save")
     public Result save(@RequestBody Product product) {
         productService.save(product);

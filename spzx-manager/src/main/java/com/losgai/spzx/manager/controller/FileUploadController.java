@@ -17,7 +17,6 @@ import java.io.File;
 public class FileUploadController { //minio 文件上传接口
     @Autowired
     FileUploadService fileUploadService;
-
     @PostMapping("/fileUpload")
     public Result fileUpload(@RequestParam("file") MultipartFile file) {
         //这里的file是element-plus的默认名，要改需要加@RequestParam参数

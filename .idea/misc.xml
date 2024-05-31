@@ -7,6 +7,11 @@
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/spzx-service-client/spzx-product-client/pom.xml" />
+      </set>
+    </option>
   </component>
   <component name="ProjectResources">
     <resource url="mybatis3" location="F:/Springworks/apache-maven-3.9.4/maven-repo/org/mybatis/mybatis/3.5.11/mybatis-3.5.11.jar!/org/apache/ibatis/builder/xml/mybatis-3-mapper.dtd" />

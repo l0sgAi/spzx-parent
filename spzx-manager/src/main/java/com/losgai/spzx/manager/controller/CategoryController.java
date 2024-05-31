@@ -29,14 +29,14 @@ public class CategoryController {
     }
 
     //导出Excel数据接口
-    @Log(title = "导入分类Excel", businessType = 0,operatorType = OperatorType.MANAGE)
+    @Log(title = "导出分类Excel", businessType = 0,operatorType = OperatorType.MANAGE)
     @GetMapping("/exportExcel")
     public void exportExcel(HttpServletResponse response) {
         categoryService.exportExcel(response);
     }
 
     //导入Excel文件
-    @Log(title = "导出分类Excel", businessType = 0,operatorType = OperatorType.MANAGE)
+    @Log(title = "导入分类Excel", businessType = 0,operatorType = OperatorType.MANAGE)
     @PostMapping("/importExcel")
     public Result importExcel(MultipartFile file) {
         //获取上传文件

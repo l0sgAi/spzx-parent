@@ -1,0 +1,26 @@
+server:
+  port: 8511
+
+spring:
+  application:
+    name: service-product
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: localhost:8848
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #TODO 将192.168.200.132修改成自己的虚拟机ip
+    url: jdbc:mysql://192.168.200.132:3306/spzx_db?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+  #Redis配置
+  data:
+    redis:
+      host: 192.168.200.132
+      port: 6379
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:/mapper/*/*.xml

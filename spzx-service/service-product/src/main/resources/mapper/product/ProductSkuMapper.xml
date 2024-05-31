@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--保证映射文件的命名空间和mapper接口的全类名保持一致-->
+<mapper namespace="com.losgai.spzx.product.mapper.ProductSkuMapper">
+
+    <resultMap id="productSkuMap" type="com.losgai.spzx.model.entity.product.ProductSku" autoMapping="true"/>
+
+    <sql id="columns">
+        id,
+         sku_code,
+         sku_name,
+         product_id,
+         thumb_img,
+         sale_price,
+         market_price,
+         cost_price,
+         stock_num,
+         sale_num,
+         sku_spec,
+         weight,
+         volume,
+         status,
+         create_time,
+         update_time,
+         is_deleted
+    </sql>
+
+    <!--按销量查询前10的sku-->
+    <select id="findProductSkuBySal" resultMap="productSkuMap">
+        SELECT sku.*
+        FROM product_sku sku
+                 INNER JOIN product p
+                            ON p.id = sku.product_id
+                                AND p.status = 1
+                                AND p.is_deleted = 0
+                                AND sku.is_deleted = 0
+        ORDER BY sku.sale_num DESC
+        LIMIT 10
+    </select>
+</mapper>

@@ -65,7 +65,7 @@ public class FileUploadServiceImpl implements FileUploadService {
                             .build());
 
             //获取上传文件在minio的路径
-            //http://192.168.200.131:9001/spzx-buket/2023-10-04_21.43.17.png
+            //http://192.168.200.132:9001/spzx-buket/2023-10-04_21.43.17.png
             String url = minioProperties.getEndpointUrl() + "/"
                     + minioProperties.getBucketName() + "/"
                     + fileName; //简单字符串拼接，但是文件名会重复
