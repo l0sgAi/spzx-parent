@@ -1,0 +1,39 @@
+#TODO 将192.168.200.132修改成自己的虚拟机ip
+server:
+  port: 8500
+
+spring:
+#  main:
+#    web-application-type: none
+  application:
+    name: spzx-server-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://192.168.200.132:8848
+      config: #暂时关闭导入检查
+        import-check:
+          enabled: false
+    gateway: # 路由发现
+      discovery:
+        locator:
+          enabled: true
+      globalcors: # 解决跨域
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            # 允许请求中携带的头信息
+            allowedHeaders: "*"
+            # 运行跨域的请求方式
+            allowedMethods: "*"
+            # 跨域检测的有效期,单位s
+            maxAge: 36000
+      routes: # 路由配置
+        - id: service-product
+          uri: lb://service-product
+          predicates:
+            - Path=/*/product/**
+#  data:
+#    redis:
+#      port: 6379
+#      host: 192.168.200.132

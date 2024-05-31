@@ -32,9 +32,9 @@
         <fastjson.version>2.0.21</fastjson.version>
         <lombok.version>1.18.20</lombok.version>
         <mybatis.version>3.0.1</mybatis.version>
-        <cloud.version>2022.0.2</cloud.version>
-        <alibaba.version>2022.0.0.0-RC2</alibaba.version>
-        <alipay.version>4.8.73.ALL</alipay.version>
+        <cloud.version>2022.0.5</cloud.version> <!--2022.0.2-->
+        <alibaba.version>2022.0.0.0-RC2</alibaba.version> <!--2022.0.0.0-RC2-->
+        <alipay.version>4.8.73.ALL</alipay.version> <!--4.8.73.ALL-->
     </properties>
 
     <!-- 管理依赖，版本锁定 -->
@@ -87,7 +87,7 @@
             <dependency>
                 <groupId>com.alipay.sdk</groupId>
                 <artifactId>alipay-sdk-java</artifactId>
-                <version>4.8.73.ALL</version>
+                <version>4.8.73.ALL</version> <!--最新 4.39.79.ALL-->
             </dependency>
 
         </dependencies>
