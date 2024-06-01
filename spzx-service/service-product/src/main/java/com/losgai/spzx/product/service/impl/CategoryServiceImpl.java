@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.losgai.spzx.model.entity.product.Category;
 import com.losgai.spzx.product.mapper.CategoryMapper;
 import com.losgai.spzx.product.service.CategoryService;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;

@@ -6,15 +6,17 @@ import com.losgai.spzx.model.vo.common.Result;
 import com.losgai.spzx.model.vo.common.ResultCodeEnum;
 import com.losgai.spzx.model.vo.h5.IndexVo;
 import com.losgai.spzx.product.service.CategoryService;
-import com.losgai.spzx.product.service.ProductSkuService;
+import com.losgai.spzx.product.service.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Tag(name = "首页接口管理")
 @RestController
@@ -25,7 +27,7 @@ public class IndexController {
     private CategoryService categoryService;
 
     @Autowired
-    private ProductSkuService productService;
+    private ProductService productService;
 
     @GetMapping
     public Result index() { //主页

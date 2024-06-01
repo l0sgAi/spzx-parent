@@ -16,14 +16,16 @@
         from category
         where parent_id = 0
         and is_deleted = 0
-        order by id desc
+        and status = 1
+        order by id
     </select>
 
-
+    <!--查询所有分类信息-->
     <select id="findAllCategoryList" resultMap="categoryMap">
         select <include refid="columns"/>
         from category
         where is_deleted = 0
+        and status = 1
         order by order_num
     </select>
 </mapper>
