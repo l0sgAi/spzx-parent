@@ -4,7 +4,7 @@ server:
 
 spring:
   application:
-    name: service-product
+    name: service-user
   cloud:
     nacos:
       discovery:

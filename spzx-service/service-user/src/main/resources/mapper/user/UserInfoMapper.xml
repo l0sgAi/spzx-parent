@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--保证映射文件的命名空间和mapper接口的全类名保持一致-->
+<mapper namespace="com.losgai.spzx.user.mapper.UserInfoMapper">
+
+    <resultMap id="userInfoMap" type="com.losgai.spzx.model.entity.user.UserInfo"/>
+
+    <sql id="column">
+        id,username,password,nick_name,phone,avatar,sex,memo,open_id,union_id,last_login_ip,last_login_time,status,create_time,update_time,is_deleted
+    </sql>
+
+    <!--保存用户信息-->
+    <insert id="save">
+        insert into user_info
+            (username,
+             password,
+             nick_name,
+             avatar,
+             sex,
+             phone,
+             memo,
+             open_id,
+             union_id,
+             last_login_ip,
+             last_login_time,
+             status)
+        values (
+                #{username},
+                #{password},
+                #{nickName},
+                #{avatar},
+                #{sex},
+                #{phone},
+                #{memo},
+                #{openId},
+                #{unionId},
+                #{lastLoginIp},
+                #{lastLoginTime},
+                #{status}
+               )
+
+    </insert>
+
+    <!--查询重复用户名-->
+    <select id="selectByUserName" resultMap="userInfoMap">
+        select <include refid="column"/>
+        from user_info
+        where username = #{userName}
+        and is_deleted = 0
+    </select>
+
+</mapper>
+

@@ -17,14 +17,14 @@ import java.util.concurrent.TimeUnit;
 public class SmsServiceImpl implements SmsService {
 
     @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     @Override
     public void sendCode(String phone) {
 
         //TODO 查询redis是否已经缓存了验证码，这里是测试省钱的策略，实际环境应该删掉这一段
         String code = redisTemplate.opsForValue().get(phone);
-        if(StringUtils.hasText(code)) {
+        if (StringUtils.hasText(code)) {
             return;
         }
 
@@ -32,10 +32,10 @@ public class SmsServiceImpl implements SmsService {
         String codeValidate = RandomStringUtils.randomNumeric(4);
 
         //2 生成验证码放redis 设置过期时间180s
-        redisTemplate.opsForValue().set(phone,codeValidate,8, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set("phone_code: " + phone, codeValidate, 8, TimeUnit.MINUTES);
 
         //3 发送短信验证码
-        sendMessage(phone,codeValidate);
+        sendMessage(phone, codeValidate);
     }
 
     private void sendMessage(String phone, String codeValidate) {
@@ -50,7 +50,7 @@ public class SmsServiceImpl implements SmsService {
         headers.put("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
         Map<String, String> querys = new HashMap<String, String>();
         Map<String, String> bodys = new HashMap<String, String>();
-        bodys.put("content", "code:"+codeValidate);
+        bodys.put("content", "code:" + codeValidate);
         bodys.put("template_id", "CST_ptdie100");  //注意，CST_ptdie100该模板ID仅为调试使用，调试结果为"status": "OK" ，即表示接口调用成功，然后联系客服报备自己的专属签名模板ID，以保证短信稳定下发
         bodys.put("phone_number", phone);
 
