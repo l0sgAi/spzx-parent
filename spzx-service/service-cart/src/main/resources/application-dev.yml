@@ -1,0 +1,20 @@
+#TODO 将192.168.200.132修改成自己的虚拟机ip
+# 购物车微服务端口
+server:
+  port: 8513
+
+spring:
+  application:
+    name: service-cart
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://192.168.200.132:8848
+      config:  #暂时关闭导入检查
+        import-check:
+          enabled: false
+  #Redis配置
+  data:
+    redis:
+      host: 192.168.200.132
+      port: 6379
