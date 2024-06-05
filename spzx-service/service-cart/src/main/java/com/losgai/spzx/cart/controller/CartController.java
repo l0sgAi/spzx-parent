@@ -19,7 +19,7 @@ public class CartController {
     private CartService cartService;
 
     @Operation(summary = "添加购物车")
-    @GetMapping("auth/addToCart/{skuId}/{skuNum}")
+    @GetMapping("/auth/addToCart/{skuId}/{skuNum}")
     public Result addToCart(@PathVariable Long skuId,
                             @PathVariable Integer skuNum) {
         cartService.addToCart(skuId, skuNum);
@@ -27,14 +27,14 @@ public class CartController {
     }
 
     @Operation(summary = "查询购物车")
-    @GetMapping("auth/cartList")
+    @GetMapping("/auth/cartList")
     public Result cartList() {
         List<CartInfo> cartInfoList = cartService.getCartList();
         return Result.build(cartInfoList, ResultCodeEnum.SUCCESS);
     }
 
     @Operation(summary = "删除购物车")
-    @DeleteMapping("auth/deleteCart/{skuId}")
+    @DeleteMapping("/auth/deleteCart/{skuId}")
     public Result deleteCart(@PathVariable Long skuId) {
         cartService.deleteCart(skuId);
         return Result.build(null, ResultCodeEnum.SUCCESS);
@@ -59,6 +59,21 @@ public class CartController {
     @GetMapping("/auth/clearCart")
     public Result clearCart(){
         cartService.clearCart();
+        return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    //远程调用: 订单结算时使用，获取选中的商品列表
+    @Operation(summary = "选中的购物车")
+    @GetMapping("/auth/getAllChecked")
+    public List<CartInfo> getCartCheckedList() {
+        return cartService.getAllChecked();
+    }
+
+    //远程调用: 订单结算时使用，删除订单购物车商品
+    @Operation(summary = "删除订单购物车商品")
+    @GetMapping("/auth/deleteChecked")
+    public Result deleteChecked() {
+        cartService.deleteCheckedCart();
         return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 

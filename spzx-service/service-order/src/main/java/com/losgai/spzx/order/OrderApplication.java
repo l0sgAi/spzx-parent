@@ -1,16 +1,17 @@
-package com.losgai.spzx.cart;
+package com.losgai.spzx.order;
 
+import com.losgai.spzx.common.annotation.EnableTokenFeignInterceptor;
 import com.losgai.spzx.common.annotation.EnableUserLoginAuthInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class) //排除数据库自动化配置，因为只用Redis缓存
+@SpringBootApplication
 @EnableFeignClients(basePackages = {"com.losgai.spzx"})
+@EnableTokenFeignInterceptor
 @EnableUserLoginAuthInterceptor
-public class CartApplication {
+public class OrderApplication {
     public static void main(String[] args) {
-        SpringApplication.run(CartApplication.class,args);
+        SpringApplication.run(OrderApplication.class, args);
     }
 }

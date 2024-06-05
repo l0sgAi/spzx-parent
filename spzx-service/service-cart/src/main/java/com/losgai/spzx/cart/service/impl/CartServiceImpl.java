@@ -174,6 +174,41 @@ public class CartServiceImpl implements CartService {
         redisTemplate.delete(cartKey);
     }
 
+    @Override
+    public List<CartInfo> getAllChecked() {
+        //1 构建查询redis里面的key值
+        Long userId = AuthContextUtil.getUserInfo().getId();
+        String cartKey = this.getCartKey(userId);
+
+        //2 根据key查找redis数据
+        List<Object> valueList = redisTemplate.opsForHash().values(cartKey);
+        if(!CollectionUtils.isEmpty(valueList)){
+            return valueList.stream().map(cartInfoObj ->
+                            JSON.parseObject(cartInfoObj.toString(), CartInfo.class))
+                    .filter(cartInfo -> cartInfo.getIsChecked() == 1) //过滤器，只选择选中的
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public void deleteCheckedCart() {
+        //1 构建查询redis里面的key值
+        Long userId = AuthContextUtil.getUserInfo().getId();
+        String cartKey = this.getCartKey(userId);
+
+        //2 根据key获取value
+        List<Object> valueList = redisTemplate.opsForHash().values(cartKey);
+        if(!CollectionUtils.isEmpty(valueList)){
+            valueList.stream().map(cartInfoObj ->
+                            JSON.parseObject(cartInfoObj.toString(), CartInfo.class))
+                    .filter(cartInfo -> cartInfo.getIsChecked() == 1)
+                    .forEach(cartInfo -> redisTemplate.opsForHash().delete
+                            (cartKey, String.valueOf(cartInfo.getSkuId())));
+        }
+
+    }
+
     private String getCartKey(Long userId) { //返回对应的购物车Key
         return "user_cart: " + userId;
     }
