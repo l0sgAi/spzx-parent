@@ -64,11 +64,27 @@
     </insert>
 
     <!--获取订单信息-->
-    <select id="getById" resultType="com.losgai.spzx.model.entity.order.OrderInfo">
+    <select id="getById" resultMap="orderInfoMap">
         select <include refid="columns"/>
         from order_info
         where id = #{orderId}
         and is_deleted = 0
+    </select>
+
+    <!--根据id和订单状态查询-->
+    <select id="findUserPage" resultMap="orderInfoMap">
+        select <include refid="columns"/>
+        from order_info
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="orderStatus != null">
+                and order_status = #{orderStatus}
+            </if>
+            and is_deleted = 0
+        </where>
+        order by id desc
     </select>
 </mapper>
 

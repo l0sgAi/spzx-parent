@@ -44,7 +44,6 @@ public class ProductController {
     @GetMapping("/getBySkuId/{skuId}")
     public ProductSku getSkuInfo(@PathVariable Long skuId) {
         ProductSku productSku = productService.findProductSkuById(skuId);
-        System.out.println("\n*******远程调用，根据skuId返回skuInfo********\n" + productSku);
         return productSku;
     }
 

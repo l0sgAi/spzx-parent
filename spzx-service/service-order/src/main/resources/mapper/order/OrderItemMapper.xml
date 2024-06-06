@@ -22,5 +22,14 @@
                 #{skuPrice},
                 #{skuNum})
     </insert>
+
+    <!--根据id查询-->
+    <select id="findByOrderId" resultType="com.losgai.spzx.model.entity.order.OrderItem">
+        select *
+        from order_item
+        where order_id = #{orderId}
+        and is_deleted = 0
+        order by id desc
+    </select>
 </mapper>
 

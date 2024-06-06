@@ -1,5 +1,7 @@
 package com.losgai.spzx.order.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.losgai.spzx.common.exception.SpzxException;
 import com.losgai.spzx.feign.cart.CartFeignClient;
 import com.losgai.spzx.feign.product.ProductFeignClient;
@@ -188,5 +190,25 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         tradeVo.setTotalAmount(skuInfo.getSalePrice());
         tradeVo.setOrderItemList(orderItemList);
         return tradeVo;
+    }
+
+    @Override
+    public PageInfo<OrderInfo> findOrderByPage(Integer page,
+                                               Integer limit,
+                                               Integer orderStatus) {
+        //查询订单信息
+        PageHelper.startPage(page, limit);
+        Long userId = AuthContextUtil.getUserInfo().getId();
+        List<OrderInfo> orderInfoList = orderInfoMapper.findUserPage(userId,orderStatus);
+
+        //获取订单里面所有订单项目
+        orderInfoList.forEach(orderInfo -> {
+            //根据id查询订单项目
+            List<OrderItem> orderItemList = orderItemMapper.findByOrderId(orderInfo.getId());
+            //封装
+            orderInfo.setOrderItemList(orderItemList);
+        });
+
+        return new PageInfo<>(orderInfoList);
     }
 }

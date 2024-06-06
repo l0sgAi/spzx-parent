@@ -1,5 +1,6 @@
 package com.losgai.spzx.order.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.losgai.spzx.model.dto.h5.OrderInfoDto;
 import com.losgai.spzx.model.entity.order.OrderInfo;
 import com.losgai.spzx.model.vo.common.Result;
@@ -7,7 +8,9 @@ import com.losgai.spzx.model.vo.common.ResultCodeEnum;
 import com.losgai.spzx.model.vo.h5.TradeVo;
 import com.losgai.spzx.order.service.OrderInfoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,5 +50,14 @@ public class OrderInfoController {
     public Result buy(@PathVariable Long skuId) {
         TradeVo tradeVo = orderInfoService.buy(skuId);
         return Result.build(tradeVo, ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "获取订单分页列表")
+    @GetMapping("auth/{page}/{limit}")
+    public Result updateOrderStatus(@PathVariable Integer page,
+                                    @PathVariable Integer limit,
+                                    @RequestParam(required = false) Integer orderStatus) {
+        PageInfo<OrderInfo> pageInfo = orderInfoService.findOrderByPage(page, limit, orderStatus);
+        return Result.build(pageInfo , ResultCodeEnum.SUCCESS) ;
     }
 }
