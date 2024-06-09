@@ -63,6 +63,83 @@
                 #{cancelReason})
     </insert>
 
+    <!--更新订单信息-->
+    <update id="updateById">
+        update order_info set
+        <if test="userId != null and userId != ''">
+            user_id = #{userId},
+        </if>
+        <if test="nickName != null and nickName != ''">
+            nick_name = #{nickName},
+        </if>
+        <if test="orderNo != null and orderNo != ''">
+            order_no = #{orderNo},
+        </if>
+        <if test="couponId != null and couponId != ''">
+            coupon_id = #{couponId},
+        </if>
+        <if test="totalAmount != null and totalAmount != ''">
+            total_amount = #{totalAmount},
+        </if>
+        <if test="couponAmount != null and couponAmount != ''">
+            coupon_amount = #{couponAmount},
+        </if>
+        <if test="originalTotalAmount != null and originalTotalAmount != ''">
+            original_total_amount = #{originalTotalAmount},
+        </if>
+        <if test="feightFee != null and feightFee != ''">
+            feight_fee = #{feightFee},
+        </if>
+        <if test="payType != null">
+            pay_type = #{payType},
+        </if>
+        <if test="orderStatus != null">
+            order_status = #{orderStatus},
+        </if>
+        <if test="receiverName != null and receiverName != ''">
+            receiver_name = #{receiverName},
+        </if>
+        <if test="receiverPhone != null and receiverPhone != ''">
+            receiver_phone = #{receiverPhone},
+        </if>
+        <if test="receiverTagName != null and receiverTagName != ''">
+            receiver_tag_name = #{receiverTagName},
+        </if>
+        <if test="receiverProvince != null and receiverProvince != ''">
+            receiver_province = #{receiverProvince},
+        </if>
+        <if test="receiverCity != null and receiverCity != ''">
+            receiver_city = #{receiverCity},
+        </if>
+        <if test="receiverDistrict != null and receiverDistrict != ''">
+            receiver_district = #{receiverDistrict},
+        </if>
+        <if test="receiverAddress != null and receiverAddress != ''">
+            receiver_address = #{receiverAddress},
+        </if>
+        <if test="paymentTime != null">
+            payment_time = #{paymentTime},
+        </if>
+        <if test="deliveryTime != null">
+            delivery_time = #{deliveryTime},
+        </if>
+        <if test="receiveTime != null">
+            receive_time = #{receiveTime},
+        </if>
+        <if test="remark != null and remark != ''">
+            remark = #{remark},
+        </if>
+        <if test="cancelTime != null and cancelTime != ''">
+            cancel_time = #{cancelTime},
+        </if>
+        <if test="cancelReason != null and cancelReason != ''">
+            cancel_reason = #{cancelReason},
+        </if>
+        update_time =  now()
+        where
+        id = #{id}
+    </update>
+
     <!--获取订单信息-->
     <select id="getById" resultMap="orderInfoMap">
         select <include refid="columns"/>
@@ -85,6 +162,14 @@
             and is_deleted = 0
         </where>
         order by id desc
+    </select>
+
+    <!--远程调用：根据orderId查询订单信息-->
+    <select id="getByOrderNo" resultType="com.losgai.spzx.model.entity.order.OrderInfo">
+        select <include refid="columns" />
+        from order_info
+        where
+        order_no = #{orderNo}
     </select>
 </mapper>
 

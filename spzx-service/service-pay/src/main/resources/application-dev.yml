@@ -1,0 +1,32 @@
+server:
+  port: 8515
+
+spring:
+  application:
+    name: service-pay
+  cloud:
+    nacos:
+      discovery:
+        #TODO 将192.168.200.132修改成自己的ip
+        server-addr: 192.168.200.132:8848
+      config: #暂时关闭导入检查
+        import-check:
+          enabled: false
+  # 配置数据库连接信息
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.200.132:3306/spzx_db?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+  #Redis配置
+  data:
+    redis:
+      host: 192.168.200.132
+      port: 6379
+  config:
+    import: application-alipay.yml
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:/mapper/*/*.xml

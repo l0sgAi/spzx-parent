@@ -45,10 +45,10 @@ spring:
           uri: lb://service-order
           predicates:
             - Path=/api/order/orderInfo/**
-#        - id: service-pay
-#          uri: lb://service-pay
-#          predicates:
-#            - Path=/api/order/alipay/**
+        - id: service-pay
+          uri: lb://service-pay
+          predicates:
+            - Path=/api/order/alipay/**
   data:
     redis:
       port: 6379

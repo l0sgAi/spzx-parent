@@ -30,6 +30,7 @@ import org.springframework.util.CollectionUtils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -210,5 +211,36 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         });
 
         return new PageInfo<>(orderInfoList);
+    }
+
+    @Override
+    @Transactional
+    public OrderInfo getByOrderNo(String orderNo) {
+        System.out.println("\n***远程调用orderNo: \n" + orderNo);
+        OrderInfo orderInfo = orderInfoMapper.getByOrderNo(orderNo);
+        List<OrderItem> orderItem = orderItemMapper.findByOrderId(orderInfo.getId());
+        System.out.println("\n***远程调用orderItem: \n" + orderItem);
+        orderInfo.setOrderItemList(orderItem);
+        return orderInfo;
+    }
+
+    //支付后更新订单状态
+    @Override
+    public void updateOrderStatus(String orderNo, Integer orderStatus) {
+
+        //订单状态更新
+        OrderInfo orderInfo = orderInfoMapper.getByOrderNo(orderNo);
+        orderInfo.setOrderStatus(1);
+        orderInfo.setPaymentTime(new Date());
+        orderInfo.setPayType(2);
+        orderInfoMapper.updateById(orderInfo);
+
+        //更新日志
+        // 记录日志
+        OrderLog orderLog = new OrderLog();
+        orderLog.setOrderId(orderInfo.getId());
+        orderLog.setProcessStatus(1);
+        orderLog.setNote("支付宝支付成功");
+        orderLogMapper.save(orderLog);
     }
 }

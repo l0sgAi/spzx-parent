@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.losgai.spzx.model.dto.h5.ProductSkuDto;
+import com.losgai.spzx.model.dto.product.SkuSaleDto;
 import com.losgai.spzx.model.entity.product.Product;
 import com.losgai.spzx.model.entity.product.ProductDetails;
 import com.losgai.spzx.model.entity.product.ProductSku;
@@ -16,6 +17,7 @@ import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -90,5 +92,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductSku findProductSkuById(Long skuId) {
         return productSkuMapper.selectById(skuId);
+    }
+
+    @Transactional
+    @Override
+    public Boolean updateSkuSaleNum(List<SkuSaleDto> skuSaleDtoList) {
+        if(!CollectionUtils.isEmpty(skuSaleDtoList)) {
+            for(SkuSaleDto skuSaleDto : skuSaleDtoList) {
+                productSkuMapper.updateSale(skuSaleDto.getSkuId(), skuSaleDto.getNum());
+            }
+        }
+        return true;
     }
 }

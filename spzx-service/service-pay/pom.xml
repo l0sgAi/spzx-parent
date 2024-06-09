@@ -5,18 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.losgai</groupId>
-        <artifactId>spzx-parent</artifactId>
+        <artifactId>spzx-service</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>spzx-service-client</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>service-user-client</module>
-        <module>service-product-client</module>
-        <module>service-cart-client</module>
-        <module>service-order-client</module>
-    </modules>
+    <artifactId>service-pay</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -25,33 +18,22 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>com.losgai</groupId>
-            <artifactId>common-util</artifactId>
+            <artifactId>service-order-client</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>provided </scope>
         </dependency>
 
         <dependency>
             <groupId>com.losgai</groupId>
-            <artifactId>spzx-model</artifactId>
+            <artifactId>service-product-client</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>provided </scope>
         </dependency>
 
-        <!-- openfeign依赖 -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
         </dependency>
-
-        <!-- loadbalancer依赖 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-loadbalancer</artifactId>
-        </dependency>
-
     </dependencies>
 
 </project>

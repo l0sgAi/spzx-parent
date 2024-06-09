@@ -60,4 +60,20 @@ public class OrderInfoController {
         PageInfo<OrderInfo> pageInfo = orderInfoService.findOrderByPage(page, limit, orderStatus);
         return Result.build(pageInfo , ResultCodeEnum.SUCCESS) ;
     }
+
+    //远程调用：根据订单编号获取订单信息
+    @Operation(summary = "获取订单信息")
+    @GetMapping("auth/getOrderInfoByOrderNo/{orderNo}")
+    public OrderInfo getOrderInfoByOrderNo(@Parameter(name = "orderId", description = "订单id", required = true) @PathVariable String orderNo) {
+        System.out.println("\n***订单的orderNo: \n" + orderNo);
+        return orderInfoService.getByOrderNo(orderNo);
+    }
+
+    //远程调用：更新订单状态
+    @Operation(summary = "获取订单分页列表")
+    @GetMapping("auth/updateOrderStatusPayed/{orderNo}/{orderStatus}")
+    public Result updateOrderStatus(@PathVariable(value = "orderNo") String orderNo , @PathVariable(value = "orderStatus") Integer orderStatus) {
+        orderInfoService.updateOrderStatus(orderNo , orderStatus);
+        return Result.build(null , ResultCodeEnum.SUCCESS) ;
+    }
 }

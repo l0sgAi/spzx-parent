@@ -2,6 +2,7 @@ package com.losgai.spzx.product.service;
 
 import com.github.pagehelper.PageInfo;
 import com.losgai.spzx.model.dto.h5.ProductSkuDto;
+import com.losgai.spzx.model.dto.product.SkuSaleDto;
 import com.losgai.spzx.model.entity.product.ProductSku;
 import com.losgai.spzx.model.vo.h5.ProductItemVo;
 
@@ -15,4 +16,6 @@ public interface ProductService {
     ProductItemVo findProductItem(Long skuId);
 
     ProductSku findProductSkuById(Long skuId);
+
+    Boolean updateSkuSaleNum(List<SkuSaleDto> skuSaleDtoList);
 }

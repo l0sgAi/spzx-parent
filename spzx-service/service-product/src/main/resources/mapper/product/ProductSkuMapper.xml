@@ -27,6 +27,11 @@
          is_deleted
     </sql>
 
+    <!--更新销量和库存-->
+    <update id="updateSale" >
+        update product_sku set sale_num = sale_num + #{num}, stock_num = stock_num - #{num}, update_time =  now() where id = #{skuId}
+    </update>
+
     <!--按销量查询前10的sku-->
     <select id="findProductSkuBySal" resultMap="productSkuMap">
         SELECT sku.*
